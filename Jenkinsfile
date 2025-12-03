@@ -1,9 +1,5 @@
 pipeline {
     agent any
-
-    tools {
-        jdk 'JDK17'
-    }
     stages {
 
         stage('Compile') {
@@ -51,4 +47,5 @@ pipeline {
         }
     }
 }
+
 
