@@ -1,7 +1,11 @@
-class TestFactorial{
-    public static void main(String args[]){
-        int n=-3;
-        long ans=Factorial.compute(n);
-        System.out.println("Dont enter negative number");
+class TestFactorial {
+    public static void main(String args[]) {
+        int n = -3;
+        long ans = Factorial.compute(n);
+        if (n < 0) {
+            System.out.println("Don't enter negative number");
+        } else {
+            System.out.println("Factorial: " + ans);
+        }
     }
 }
