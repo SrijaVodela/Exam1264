@@ -1,33 +1,49 @@
-pipeline{
-    agentany
-    Stages{
-        Stage('Compile'){
-            echo 'compiling the app'
-            bat 'javac Factorial.java TestFactorial.java'
-        }
-        Stage('Run'){
-            echo 'Run the app'
-            bat 'java Factorial'
-        }
-        Stage('Test'){
-            echo 'Test the app'
-            bat 'java TestFactorial'
-        }
-        Stage('PackageJar'){
-            echo 'Jar file'
-            bat 'jar cfm Factorial.java Manifest,txt Factorial.class'
-        }
-        Stage('Archive artifact'){
-            echo 'Artifact'
-            bat 'archiveArtifacts Artifact: Factorial.jar'
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Compile') {
+            steps {
+                echo 'Compiling the app'
+                bat 'javac Factorial.java TestFactorial.java'
+            }
         }
 
-    }
-    Post{
-        Success{
-            echo 'Pipeline runned Successfully'
+        stage('Run') {
+            steps {
+                echo 'Running the app'
+                bat 'java Factorial'
+            }
         }
-        Failure{
+
+        stage('Test') {
+            steps {
+                echo 'Testing the app'
+                bat 'java TestFactorial'
+            }
+        }
+
+        stage('PackageJar') {
+            steps {
+                echo 'Packaging into JAR'
+                bat 'jar cfm Factorial.jar Manifest.txt Factorial.class TestFactorial.class'
+            }
+        }
+
+        stage('Archive Artifact') {
+            steps {
+                echo 'Archiving artifact'
+                archiveArtifacts artifacts: 'Factorial.jar'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline ran successfully'
+        }
+        failure {
             echo 'Pipeline failed to run'
         }
     }
